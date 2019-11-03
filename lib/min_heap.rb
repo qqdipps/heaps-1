@@ -14,10 +14,11 @@ class MinHeap
   end
 
   # This method adds a HeapNode instance to the heap
-  # Time Complexity: ?
-  # Space Complexity: ?
+  # Time Complexity: O(log(n))
+  # Space Complexity: 0(1)
   def add(key, value = key)
-    raise NotImplementedError, "Method not implemented yet..."
+    @store << HeapNode.new(key, value)
+    heap_up(@store.length - 1)
   end
 
   # This method removes and returns an element from the heap
@@ -25,7 +26,10 @@ class MinHeap
   # Time Complexity: ?
   # Space Complexity: ?
   def remove()
-    raise NotImplementedError, "Method not implemented yet..."
+    removed = @store[0]
+    @store[0] = @store.pop 
+    heap_down(0)
+    return removed.value
   end
 
 
@@ -55,17 +59,60 @@ class MinHeap
   # This helper method takes an index and
   #  moves it up the heap, if it is less than it's parent node.
   #  It could be **very** helpful for the add method.
-  # Time complexity: ?
-  # Space complexity: ?
+  # Time complexity: O(log(n))
+  # Space complexity: O(1)
   def heap_up(index)
-    
+    parent_i =  parent_index(index)
+    until index == 0 || @store[parent_i].key < @store[index].key 
+      swap(parent_i, index)
+      index = parent_i
+      parent_i = parent_index(index)
+    end
+  end
+
+  def parent_index(index)
+    return (index - 1) / 2
   end
 
   # This helper method takes an index and 
   #  moves it up the heap if it's smaller
   #  than it's parent node.
   def heap_down(index)
-    raise NotImplementedError, "Method not implemented yet..."
+    right_child_i = right_child_index(index)
+    left_child_i = left_child_index(index)
+    until heaped_down_valid(left_child_i, right_child_i, index)
+      pos_to_swap = index_of_smallest_child_key(left_child_i, right_child_i)
+      swap(pos_to_swap, index)
+      index = pos_to_swap
+      right_child_i = right_child_index(index)
+      left_child_i = left_child_index(index)
+    end
+  end
+
+  def heaped_down_valid(left_child_i, right_child_i, index)
+    return !left_child_i || @store[left_child_i].key > @store[index].key && (right_child_i && @store[right_child_i].key > @store[index].key)
+  end
+
+  def index_of_smallest_child_key(index1,  index2)
+    if !index2 || @store[index2].key > @store[index1].key
+      return index1
+    else  
+      return index2
+    end
+  end
+
+  def right_child_index(index)
+    if index * 2 + 2 <=  @store.length - 1
+      return  index * 2 + 2
+    end
+    return
+  end
+
+  def left_child_index(index)
+    if index * 2 + 1 <= @store.length - 1
+      return  index * 2 + 1
+    end
+    return
   end
 
   # If you want a swap method... you're welcome
