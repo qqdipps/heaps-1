@@ -23,8 +23,8 @@ class MinHeap
 
   # This method removes and returns an element from the heap
   #   maintaining the heap structure
-  # Time Complexity: ?
-  # Space Complexity: ?
+  # Time complexity: O(log(n))
+  # Space complexity: O(1)
   def remove()
     removed = @store[0]
     @store[0] = @store.pop 
@@ -48,10 +48,10 @@ class MinHeap
   end
 
   # This method returns true if the heap is empty
-  # Time complexity: ?
-  # Space complexity: ?
+  # Time complexity: O(1) assuming ruby implements array with memotized length ie attribute of array class rather than method
+  # Space complexity: O(1)
   def empty?
-    raise NotImplementedError, "Method not implemented yet..."
+    return @store.empty?
   end
 
   private
@@ -77,6 +77,8 @@ class MinHeap
   # This helper method takes an index and 
   #  moves it up the heap if it's smaller
   #  than it's parent node.
+  # Time complexity: O(log(n))
+  # Space complexity: O(1)
   def heap_down(index)
     right_child_i = right_child_index(index)
     left_child_i = left_child_index(index)
