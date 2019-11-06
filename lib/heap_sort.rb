@@ -33,11 +33,7 @@ end
 # Space Complexity: O(1)
 def heap_down(sub_root, last_pos, list)
   max_child = max_child(right_child(sub_root, last_pos), left_child(sub_root, last_pos), list)
-<<<<<<< HEAD
   while max_child && list[max_child] > list[sub_root]
-=======
-  while max_child && max_child > sub_root
->>>>>>> f1699200d64687cc6614f7d9cec6703ea301ee5f
     swap(sub_root, max_child, list)
     sub_root = max_child
     max_child = max_child(right_child(sub_root, last_pos), left_child(sub_root, last_pos), list)
